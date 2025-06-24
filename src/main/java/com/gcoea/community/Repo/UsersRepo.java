@@ -13,4 +13,7 @@ public interface UsersRepo extends JpaRepository<Users, Long> {
 
     // New custom query method to find a user by username
     Optional<Users> findByUsername(String username);
+
+    Optional<Users> findByEmail(String email);
+
 }

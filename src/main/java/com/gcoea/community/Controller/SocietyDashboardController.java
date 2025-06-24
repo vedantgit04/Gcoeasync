@@ -56,12 +56,13 @@ public class SocietyDashboardController {
     // List events for the society
     @GetMapping("/events")
     public ResponseEntity<List<Event>> getSocietyEvents(@AuthenticationPrincipal Users user) {
-        Society society = societyService.getSocietiesByCreatedBy(user).stream()
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Society not found for this user"));
+        List<Society> societies = societyService.getSocietiesByCreatedBy(user);
+        if (societies.isEmpty()) {
+            return ResponseEntity.ok(List.of()); // Return empty list instead of throwing
+        }
+        Society society = societies.get(0);
         return ResponseEntity.ok(eventService.getEventsBySociety(society));
     }
-
     // List members of the society
     @GetMapping("/members")
     public ResponseEntity<List<Membership>> getSocietyMembers(@AuthenticationPrincipal Users user) {

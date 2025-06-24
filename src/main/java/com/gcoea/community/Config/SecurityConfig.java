@@ -33,8 +33,8 @@ public class SecurityConfig {
                 .userDetailsService(userDetailsService)
                 // Configure authorization (security rules)
                 .authorizeHttpRequests(authorize -> authorize
-                        // Allow everyone to access the login and logout pages
-                        .requestMatchers("/login", "/logout").permitAll()
+                        // Allow everyone to access the login, logout, register pages/endpoints
+                        .requestMatchers("/login", "/logout", "/register", "/api/register").permitAll()
                         // Restrict /api/student/** to users with STUDENT role
                         .requestMatchers("/api/student/**").hasRole("STUDENT")
                         // Restrict /api/admin/** to users with ADMIN role
